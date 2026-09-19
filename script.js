@@ -34,7 +34,7 @@ function renderHeroSection() {
                     <div class="heading-wrapper">
                         <h1>Precision That Keeps<br>Industry Moving.</h1>
                         
-                        <!-- Main Play / Pause Button -->
+                        
                         <button class="play-btn" id="playToggleBtn" aria-label="Toggle Play/Pause">
                             <svg id="playIcon" width="24" height="28" viewBox="0 0 24 28" fill="currentColor">
                                 <path d="M24 14L0 27.8564L0 0.143593L24 14Z"/>
@@ -158,7 +158,7 @@ function renderIntroSection() {
     return `<section class="intro-section" id="about">
             <div class="intro-container">
                 
-                <!-- Row 1: Header Row (Tag + Main Heading) -->
+                
                 <div class="intro-header-row">
                     <span class="intro-tag">INTRODUCTION</span>
                     <h2 class="intro-heading">
@@ -208,13 +208,12 @@ function renderJourneySection() {
         <section class="journey-section">
             <div class="journey-overlay"></div>
             <div class="journey-container">
-                <!-- Section Header -->
                 <div class="journey-header">
                     <span class="journey-tag">OUR JOURNEY</span>
                     <h2>Decades of Engineering.<br>Built for Industry.</h2>
                 </div> 
 
-                <!-- Glassmorphism Stats Cards Grid -->
+                
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon">⚙️</div>
@@ -227,7 +226,7 @@ function renderJourneySection() {
                     <div class="stat-card">
                         <div class="stat-icon">🏢</div>
                         <h3>1989</h3>
-                        <p>Year Teknic Euchner was established</p>
+                        <p>Year Teknic Euchner was <br>established</p>
                     </div>
 
                     <div class="stat-divider"></div>
@@ -235,7 +234,7 @@ function renderJourneySection() {
                     <div class="stat-card">
                         <div class="stat-icon">📦</div>
                         <h3>Multiple Product Categories</h3>
-                        <p>Solutions across sensing, switching and machine control</p>
+                        <p>Solutions across sensing,<br> switching and machine control</p>
                     </div>
 
                     <div class="stat-divider"></div>
@@ -243,7 +242,7 @@ function renderJourneySection() {
                     <div class="stat-card">
                         <div class="stat-icon">🗺️</div>
                         <h3>Pan-India Dealer Network</h3>
-                        <p>Product access and support across India</p>
+                        <p>Product access and support<br> across India</p>
                     </div>
                 </div>
             </div>
@@ -317,12 +316,12 @@ function renderProductsSection() {
             <div class="products-container">
                 <div class="products-header">
                     <div class="header-left">
-                        <span class="section-tag">OUR PRODUCTS</span>
+                        <span class="section-tag"><b>OUR PRODUCTS</b></span>
                         <h2>The Right Control Gear<br>for Every Application.</h2>
                     </div>
                     <div class="header-right">
-                        <p>Industrial machines depend on components that can sense movement, detect position, control processes and respond when it matters.</p>
-                        <p>Teknic Euchner offers a focused range of industrial products engineered for reliable operation across demanding applications.</p>
+                        <p><b>Industrial machines depend on components that can sense movement, detect position, control processes and respond when it matters.</b></p>
+                        <p><b>Teknic Euchner offers a focused range of industrial products engineered for reliable operation across demanding applications.</b></p>
                         <a href="#products" class="btn-explore-main">EXPLORE OUR PRODUCTS</a>
                     </div>
                 </div>
@@ -371,10 +370,10 @@ function renderWhyUsSection() {
                 
                 <!-- Left Side: Header & Image -->
                 <div class="why-us-left">
-                    <span class="section-tag">WHY TEKNIC EUCHNER</span>
+                    <span class="section-tag"><b>WHY TEKNIC EUCHNER</b></span>
                     <h2>Built Around What Industry<br>Needs.</h2>
                     <p class="why-us-desc">
-                        Industrial environments leave little room for uncertainty. That's why our approach combines engineering expertise, robust materials and manufacturing experience to create products designed for dependable performance.
+                       <b> Industrial environments leave little room for uncertainty. That's why our approach combines engineering expertise, robust materials and manufacturing experience to create products designed for dependable performance.</b>
                     </p>
                     <div class="why-us-img-box">
                         <img src="./images/why.png" alt="Robotic Arm Automation">
