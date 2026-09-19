@@ -219,7 +219,7 @@ function renderJourneySection() {
                     <div class="stat-card">
                         <div class="stat-icon">⚙️</div>
                         <h3>35+ Years</h3>
-                        <p>Of industrial manufacturing experience</p>
+                        <p>Of industrial manufacturing<br> experience</p>
                     </div>
 
                     <div class="stat-divider"></div>
@@ -707,3 +707,48 @@ class PageZoomController {
         }
     }
 }
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.applications-section, .quality-section').forEach(sec => {
+  sec.classList.add('fade-in-section');
+  observer.observe(sec);
+});
+// ==========================================
+// SCROLL REVEAL ANIMATION OBSERVER
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+  const revealElements = document.querySelectorAll(
+    '.applications-section, .quality-section, .introduction-section, .grid-card, .section-title'
+  );
+
+  revealElements.forEach((el, index) => {
+    el.classList.add('reveal-on-scroll');
+    // Apply natural staggered delays to sibling grids
+    if (el.classList.contains('grid-card')) {
+      const delayIndex = (index % 3) + 1;
+      el.classList.add(`reveal-delay-${delayIndex}`);
+    }
+  });
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target); // Unobserve after triggering for optimal performance
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.12, // Trigger when 12% of element is visible
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+});

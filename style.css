@@ -12,11 +12,15 @@
     --max-width: 1440px;
 }
 
-/* Global Reset */
+/* Global Reset & Smooth Scroll */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 html, body {
@@ -34,11 +38,10 @@ html, body {
     min-height: 100vh;
     background-color: #000000 !important;
     transform-origin: top center;
-    
-    /* REMOVE clip-path as it cuts off edges when scaled */
     clip-path: none !important;
     -webkit-clip-path: none !important;
 }
+
 video, 
 video:focus, 
 video:fullscreen {
@@ -47,26 +50,72 @@ video:fullscreen {
     box-shadow: none;
 }
 
-/* Global Button Styles */
+/* Global Button Styles & Micro-Interactions */
 .btn-primary, 
 .btn-discover, 
 .btn-quality, 
-.btn-dealer {
-    display: inline-block;
+.btn-dealer,
+.btn-explore-main,
+.btn-cta-filled,
+.cta-header {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 16px 32px;
     background-color: var(--color-primary);
     color: var(--color-bg-light);
     text-decoration: none;
     font-size: 13px;
     font-weight: 600;
-    transition: background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                background-color 0.25s ease, 
+                box-shadow 0.25s ease !important;
 }
 
 .btn-primary:hover, 
 .btn-discover:hover, 
 .btn-quality:hover, 
-.btn-dealer:hover {
+.btn-dealer:hover,
+.btn-explore-main:hover,
+.btn-cta-filled:hover,
+.cta-header:hover {
     background-color: var(--color-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(197, 1, 0, 0.4);
+}
+
+.btn-primary:active, 
+.btn-discover:active, 
+.btn-quality:active, 
+.btn-dealer:active,
+.btn-explore-main:active,
+.btn-cta-filled:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.btn-cta-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 14px 24px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.btn-cta-outline:hover {
+    background-color: #FFFFFF;
+    color: #1A1A1A;
+    transform: translateY(-2px);
 }
 
 /* Header & Navigation */
@@ -80,8 +129,6 @@ video:fullscreen {
     z-index: 100;
     border: none;
 }
-
-
 
 .nav-container {
     max-width: var(--max-width);
@@ -122,25 +169,35 @@ video:fullscreen {
     display: flex;
     align-items: center;
     gap: 5px;
+    position: relative;
+    transition: color 0.25s ease;
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-item:hover {
     color: var(--color-primary);
 }
 
+.nav-item:hover::after {
+    width: 100%;
+}
+
 .cta-header {
     width: 220px;
     height: 100%;
-    background: var(--color-primary);
-    color: var(--color-bg-light);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 600;
 }
 
+/* Hero Section */
 .hero-section {
     position: relative;
     width: 100%;
@@ -213,13 +270,14 @@ video:fullscreen {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s, border-color 0.25s, box-shadow 0.25s;
 }
 
 .play-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.12);
     background: var(--color-primary);
     border-color: var(--color-primary);
+    box-shadow: 0 0 20px rgba(197, 1, 0, 0.6);
 }
 
 .hero-content p {
@@ -242,6 +300,11 @@ video:fullscreen {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-side-card:hover .side-image {
+    transform: scale(1.05);
 }
 
 /* Video Control Bar */
@@ -302,6 +365,7 @@ video:fullscreen {
     cursor: pointer;
     font-size: 14px;
     font-family: var(--font-mono);
+    transition: color 0.2s ease;
 }
 
 .control-btn:hover,
@@ -339,7 +403,7 @@ video:fullscreen {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .zoom-widget button#zoomResetBtn {
@@ -351,6 +415,7 @@ video:fullscreen {
 
 .zoom-widget button:hover {
     background: var(--color-primary-hover);
+    transform: scale(1.1);
 }
 
 .zoom-widget span {
@@ -361,27 +426,7 @@ video:fullscreen {
     text-align: center;
 }
 
-/* Media Queries */
-@media (max-width: 992px) {
-    .nav-links {
-        display: none;
-    }
-    .hero-container {
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        padding-top: 100px;
-    }
-    .hero-side-card {
-        display: none;
-    }
-    .heading-wrapper {
-        justify-content: center;
-    }
-    .hero-content h1 {
-        font-size: 36px;
-    }
-}
+/* Section: Intro */
 .intro-section {
     width: 100%;
     max-width: 1440px;
@@ -417,7 +462,7 @@ video:fullscreen {
 }
 
 .intro-heading {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 32px;
     line-height: 1.2;
     font-weight: 700;
@@ -458,6 +503,11 @@ video:fullscreen {
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.intro-img-box:hover img {
+    transform: scale(1.05);
 }
 
 .intro-content {
@@ -467,7 +517,7 @@ video:fullscreen {
 }
 
 .intro-text {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 13.5px;
     line-height: 1.6;
     color: #666666;
@@ -480,40 +530,15 @@ video:fullscreen {
 }
 
 .btn-discover {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #C50100;
-    color: #FFFFFF;
     font-family: 'DM Mono', monospace;
     font-size: 12px;
-    font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    text-decoration: none;
     padding: 14px 24px;
     margin-top: 8px;
-    border: none;
-    transition: background-color 0.2s ease;
 }
 
-.btn-discover:hover {
-    background-color: #a00100;
-}
-
-@media (max-width: 1024px) {
-    .intro-header-row,
-    .intro-content-row {
-        grid-template-columns: 1fr;
-    }
-
-    .left-box,
-    .center-box {
-        width: 100%;
-        height: 350px;
-    }
-}
-
+/* Section: Journey */
 .journey-section {
     width: 100%;
     max-width: 1300px;
@@ -538,6 +563,7 @@ video:fullscreen {
     background: rgba(0, 0, 0, 0.65);
     z-index: 1;
 }
+
 .journey-container {
     position: relative;
     z-index: 2;
@@ -563,10 +589,10 @@ video:fullscreen {
 }
 
 .journey-header h2 {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-size: 42px;
+    font-family: var(--font-sans);
+    font-size: 35px;
     line-height: 1.15;
-    font-weight: 700;
+    font-weight: 600;
     color: #FFFFFF;
 }
 
@@ -589,6 +615,11 @@ video:fullscreen {
     flex-direction: column;
     align-items: flex-start;
     padding: 0 15px;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
 }
 
 .stat-icon {
@@ -598,7 +629,7 @@ video:fullscreen {
 }
 
 .stat-card h3 {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 22px;
     font-weight: 700;
     color: #FFFFFF;
@@ -607,7 +638,7 @@ video:fullscreen {
 }
 
 .stat-card p {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 13px;
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.7);
@@ -619,20 +650,7 @@ video:fullscreen {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-@media (max-width: 1024px) {
-    .journey-section {
-        height: auto;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-
-    .stat-divider {
-        display: none;
-    }
-}
+/* Section: Products */
 .products-section {
     width: 100%;
     background-color: #FFFFFF;
@@ -667,7 +685,7 @@ video:fullscreen {
 }
 
 .header-left h2 {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 38px;
     line-height: 1.15;
     font-weight: 700;
@@ -675,29 +693,11 @@ video:fullscreen {
 }
 
 .header-right p {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 14px;
     line-height: 1.6;
     color: #555555;
     margin-bottom: 12px;
-}
-
-.btn-explore-main {
-    display: inline-block;
-    background-color: #C50100;
-    color: #FFFFFF;
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 12px 24px;
-    text-decoration: none;
-    text-transform: uppercase;
-    margin-top: 10px;
-    transition: background-color 0.2s ease;
-}
-
-.btn-explore-main:hover {
-    background-color: #a00100;
 }
 
 .product-cards-grid {
@@ -716,6 +716,12 @@ video:fullscreen {
     justify-content: space-between;
     min-height: 480px;
     box-sizing: border-box;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    background-color: #FAFAFA;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
 .card-top {
@@ -735,7 +741,7 @@ video:fullscreen {
 }
 
 .product-subtitle {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 13px;
     color: #333333;
     text-align: right;
@@ -749,12 +755,18 @@ video:fullscreen {
     align-items: center;
     padding: 20px 0;
     height: 226px;
+    overflow: hidden;
 }
 
 .card-image img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover .card-image img {
+    transform: scale(1.08);
 }
 
 .card-bottom {
@@ -767,7 +779,7 @@ video:fullscreen {
 }
 
 .product-desc {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 12px;
     line-height: 1.5;
     color: #666666;
@@ -785,7 +797,7 @@ video:fullscreen {
     text-decoration: none;
     padding-left: 12px;
     height: 36px;
-    transition: color 0.2s ease, border-color 0.2s ease;
+    transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 
 .arrow-box {
@@ -797,20 +809,20 @@ video:fullscreen {
     width: 36px;
     height: 36px;
     margin-left: 12px;
+    transition: background-color 0.25s ease;
 }
 
 .btn-card-explore:hover {
     border-color: #a00100;
     color: #a00100;
+    transform: translateX(3px);
 }
 
-@media (max-width: 900px) {
-    .products-header,
-    .product-cards-grid {
-        grid-template-columns: 1fr;
-    }
+.btn-card-explore:hover .arrow-box {
+    background-color: #a00100;
 }
 
+/* Section: Why Us */
 .why-us-section {
     width: 100%;
     max-width: 1440px;
@@ -846,7 +858,7 @@ video:fullscreen {
 }
 
 .why-us-left h2 {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 38px;
     line-height: 1.15;
     font-weight: 700;
@@ -855,7 +867,7 @@ video:fullscreen {
 }
 
 .why-us-desc {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 14px;
     line-height: 1.6;
     color: #555555;
@@ -874,6 +886,11 @@ video:fullscreen {
     width: 505px;
     height: 473px;
     object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.why-us-img-box:hover img {
+    transform: scale(1.04);
 }
 
 .why-us-right {
@@ -888,6 +905,11 @@ video:fullscreen {
     padding: 28px 0;
     border-bottom: 1px solid #E5E5E5;
     align-items: flex-start;
+    transition: transform 0.25s ease;
+}
+
+.feature-item:hover {
+    transform: translateX(4px);
 }
 
 .feature-item:first-child {
@@ -899,7 +921,7 @@ video:fullscreen {
 }
 
 .feature-title {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 20px;
     font-weight: 700;
     line-height: 1.25;
@@ -908,24 +930,14 @@ video:fullscreen {
 }
 
 .feature-desc {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 13.5px;
     line-height: 1.55;
     color: #555555;
     margin: 0;
 }
 
-@media (max-width: 1024px) {
-    .why-us-container {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    .feature-item {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-}
+/* Section: Applications */
 .applications-section {
     width: 100%;
     max-width: 1440px;
@@ -964,7 +976,7 @@ video:fullscreen {
 }
 
 .applications-header .header-left h2 {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 30px;
     line-height: 1.15;
     font-weight: 700;
@@ -973,7 +985,7 @@ video:fullscreen {
 }
 
 .applications-header .header-right p {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 14px;
     line-height: 1.6;
     color: #555555;
@@ -994,6 +1006,11 @@ video:fullscreen {
     align-items: flex-start;
     border-bottom: 1px solid #E5E5E5;
     padding-bottom: 30px;
+    transition: transform 0.3s ease;
+}
+
+.app-card:hover {
+    transform: translateY(-4px);
 }
 
 .app-image-container {
@@ -1009,10 +1026,15 @@ video:fullscreen {
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-card:hover .app-image-container img {
+    transform: scale(1.06);
 }
 
 .app-title {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 20px;
     font-weight: 700;
     color: #C50100;
@@ -1021,7 +1043,7 @@ video:fullscreen {
 }
 
 .app-desc {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 13px;
     line-height: 1.5;
     color: #555555;
@@ -1029,20 +1051,7 @@ video:fullscreen {
     max-width: 380px;
 }
 
-@media (max-width: 1024px) {
-    .applications-section {
-        height: auto;
-    }
-
-    .applications-header {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .applications-grid {
-        grid-template-columns: 1fr;
-    }
-}
+/* Section: Quality */
 .quality-section {
     position: relative;
     width: 100%;
@@ -1057,6 +1066,7 @@ video:fullscreen {
     box-sizing: border-box;
     overflow: hidden;
 }
+
 .quality-overlay {
     position: absolute;
     top: 0;
@@ -1087,7 +1097,7 @@ video:fullscreen {
 }
 
 .quality-left h2 {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 40px;
     line-height: 1.15;
     font-weight: 600;
@@ -1108,11 +1118,6 @@ video:fullscreen {
     margin: 0 0 4px 0;
 }
 
-.quality-statements p:last-child {
-    margin-bottom: 0;
-}
-
-/* Right Side Layout */
 .quality-right {
     display: flex;
     flex-direction: column;
@@ -1121,8 +1126,8 @@ video:fullscreen {
     height: 100%;
 }
 
-.quality-desc-top {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+.quality-desc-top, .quality-desc-bottom {
+    font-family: var(--font-sans);
     font-size: 14px;
     line-height: 1.6;
     color: #E0E0E0;
@@ -1136,50 +1141,15 @@ video:fullscreen {
     align-items: flex-start;
 }
 
-.quality-desc-bottom {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #E0E0E0;
-    margin: 0;
-}
-
 .btn-quality {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #C50100;
-    color: #FFFFFF;
     font-family: 'DM Mono', monospace;
     font-size: 13px;
-    font-weight: 500;
     padding: 14px 28px;
-    text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    transition: background-color 0.2s ease;
 }
 
-.btn-quality:hover {
-    background-color: #a00100;
-}
-
-@media (max-width: 1024px) {
-    .quality-section {
-        height: auto;
-    }
-
-    .quality-container {
-        flex-direction: column;
-        gap: 40px;
-    }
-
-    .quality-right {
-        padding-top: 0;
-        gap: 20px;
-    }
-}
-
+/* Section: Dealer */
 .dealer-section {
     width: 100%;
     max-width: 1440px;
@@ -1207,7 +1177,7 @@ video:fullscreen {
 }
 
 .dealer-left h2 {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 38px;
     line-height: 1.15;
     font-weight: 700;
@@ -1216,7 +1186,7 @@ video:fullscreen {
 }
 
 .dealer-left p {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 14px;
     line-height: 1.6;
     color: #555555;
@@ -1225,23 +1195,11 @@ video:fullscreen {
 }
 
 .btn-dealer {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #C50100;
-    color: #FFFFFF;
     font-family: 'DM Mono', monospace;
     font-size: 13px;
-    font-weight: 500;
     padding: 14px 28px;
-    text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    transition: background-color 0.2s ease;
-}
-
-.btn-dealer:hover {
-    background-color: #a00100;
 }
 
 .dealer-right {
@@ -1258,21 +1216,14 @@ video:fullscreen {
     max-height: 400px;
     object-fit: contain;
     display: block;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (max-width: 1024px) {
-    .dealer-container {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 40px;
-    }
-
-    .dealer-right {
-        align-self: center;
-        max-width: 100%;
-    }
+.dealer-right:hover .globe-img {
+    transform: rotate(4deg) scale(1.03);
 }
 
+/* Section: CTA */
 .cta-section {
     width: 100%;
     max-width: 1440px;
@@ -1299,7 +1250,7 @@ video:fullscreen {
 }
 
 .cta-left h2 {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 40px;
     line-height: 1.15;
     font-weight: 700;
@@ -1309,7 +1260,7 @@ video:fullscreen {
 }
 
 .cta-left p {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 13.5px;
     line-height: 1.6;
     color: #CCCCCC;
@@ -1321,47 +1272,6 @@ video:fullscreen {
     display: flex;
     align-items: center;
     gap: 16px;
-}
-
-.btn-cta-outline {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #FFFFFF;
-    color: #FFFFFF;
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 14px 24px;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.btn-cta-outline:hover {
-    background-color: #FFFFFF;
-    color: #1A1A1A;
-}
-
-.btn-cta-filled {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #C50100;
-    color: #FFFFFF;
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 14px 24px;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: background-color 0.2s ease;
-}
-
-.btn-cta-filled:hover {
-    background-color: #a00100;
 }
 
 .cta-right {
@@ -1379,46 +1289,33 @@ video:fullscreen {
     justify-content: center;
     padding: 20px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .cta-image-wrapper img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    transition: transform 0.4s ease;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-    .cta-banner {
-        flex-direction: column;
-        padding: 40px 24px;
-        gap: 40px;
-    }
-
-    .cta-buttons {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .btn-cta-outline,
-    .btn-cta-filled {
-        width: 100%;
-        text-align: center;
-    }
+.cta-image-wrapper:hover img {
+    transform: scale(1.08);
 }
 
+/* Section: Footer */
 .footer-section {
     width: 100%;
     max-width: 1440px;
     background-color: #C50100;
     color: #FFFFFF;
     margin: 0 auto;
-    padding: 50px 55px 25px 55px; /* Reduced top/bottom padding to remove excess height */
+    padding: 50px 55px 25px 55px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
 }
 
 .footer-container {
@@ -1430,10 +1327,10 @@ video:fullscreen {
 }
 
 .footer-brand-title h1 {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     font-size: 120px;
     font-weight: 600;
-    line-height: 0.82; /* Keeps TEKNIC and EUCHNER close */
+    line-height: 0.82;
     letter-spacing: -2px;
     color: #FFFFFF;
     margin: 0 0 30px 0;
@@ -1449,6 +1346,7 @@ video:fullscreen {
     padding-top: 20px;
     margin-top: auto;
 }
+
 .footer-content {
     display: grid;
     grid-template-columns: 340px 1fr 300px;
@@ -1510,11 +1408,13 @@ video:fullscreen {
     text-decoration: none;
     font-size: 13px;
     font-weight: 500;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    display: inline-block;
 }
 
 .footer-col ul li a:hover {
-    opacity: 0.7;
+    opacity: 0.8;
+    transform: translateX(3px);
 }
 
 .footer-right {
@@ -1555,13 +1455,13 @@ video:fullscreen {
     text-decoration: none;
     font-size: 13px;
     font-weight: 600;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.25s ease, transform 0.25s ease;
 }
 
 .footer-socials a:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
 }
-
 
 .footer-bottom p {
     font-family: 'DM Mono', monospace;
@@ -1571,8 +1471,79 @@ video:fullscreen {
     letter-spacing: 0.5px;
 }
 
+/* Scroll Reveal Fade-in Animations */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
 
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Media Queries for Responsiveness */
 @media (max-width: 1024px) {
+    .intro-header-row,
+    .intro-content-row,
+    .journey-section,
+    .products-header,
+    .product-cards-grid,
+    .why-us-container,
+    .applications-section,
+    .quality-section,
+    .dealer-container,
+    .cta-banner {
+        height: auto;
+        grid-template-columns: 1fr;
+    }
+
+    .nav-links, .hero-side-card, .stat-divider {
+        display: none;
+    }
+
+    .hero-container {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding-top: 100px;
+    }
+
+    .heading-wrapper {
+        justify-content: center;
+    }
+
+    .hero-content h1 {
+        font-size: 36px;
+    }
+
+    .stats-grid, .applications-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .left-box, .center-box {
+        width: 100%;
+        height: 350px;
+    }
+
+    .feature-item {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .quality-container, .cta-buttons {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .btn-cta-outline, .btn-cta-filled {
+        width: 100%;
+        text-align: center;
+    }
+
     .footer-brand-title h1 {
         font-size: 70px;
     }
@@ -1582,19 +1553,13 @@ video:fullscreen {
         gap: 30px;
     }
 
-    .footer-left,
-    .footer-links-grid,
-    .footer-right {
+    .footer-left, .footer-links-grid, .footer-right {
         padding: 0;
         border-right: none;
     }
 
-    .footer-address {
+    .footer-address, .footer-socials {
         text-align: left;
-    }
-
-    .footer-socials {
         justify-content: flex-start;
     }
 }
-
